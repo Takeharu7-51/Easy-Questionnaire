@@ -57,6 +57,8 @@ passport.use(new GitHubStrategy({
 
 //Google認証
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
+var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || '778771617054-uiklh0etg0ctd26ve7jugn6mfga5nue5.apps.googleusercontent.com';
+var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || 'tBKMZVkLQPpI7i5mRvF_6wsL';
 
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -67,9 +69,9 @@ passport.deserializeUser(function (user, done) {
 });
 
 passport.use(new GoogleStrategy({
-  clientID: '778771617054-uiklh0etg0ctd26ve7jugn6mfga5nue5.apps.googleusercontent.com',
-  clientSecret: 'tBKMZVkLQPpI7i5mRvF_6wsL',
-  callbackURL: 'http://localhost:8000/auth/google/callback'
+  clientID: GITHUB_CLIENT_ID,
+  clientSecret: GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.HEROKU_URL ? process.env.HEROKU_URL + 'auth/google/callback' : 'http://localhost:8000/auth/google/callback'
 },
   function (accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
