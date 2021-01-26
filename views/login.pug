@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  div(class="mainArea")
+    div(class="loginArea")
+      a(href="/auth/github" class="githubButton") GitHubでログイン
+      br
+      a(href="/auth/google" class="googleButton") Googleでログイン
+      if user
+        p 現在 #{user.provider}アカウントの #{user.displayName} でログイン中
+      else
+        p 現在ログアウト中 

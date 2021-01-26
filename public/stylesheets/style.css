@@ -1,8 +1,478 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  white-space: pre-wrap;
 }
 
 a {
-  color: #00B7FF;
+  color: #078af5;
+}
+
+::selection {
+  background-color: #389ff3;
+}
+
+/* Firefox */
+::-moz-selection {
+  background-color:  #389ff3;
+}
+
+/* 上部のデザイン */
+.topArea {
+  width: 100%;
+  height: 100px;
+  background-color: #cde3f8;
+  position: fixed;
+  z-index: 100;
+}
+
+.mainArea {
+  padding: 60px;
+}
+
+/* ログインとログアウトのボタンデザイン */
+.loginlogoutButton {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  line-height: 54px;
+  outline: none;
+  position: relative;
+  z-index: 2;
+  background-color: #165899;
+  border: 2px solid #165899;
+  color: #fff;
+  float: right;
+  margin: 15px;
+  padding: 1px 10px;
+  margin-top: 120px;
+  line-height: 50px;
+}
+
+.loginlogoutButton:hover {
+  background-color: #fff;
+  border-color: #165899;
+  color: #165899;
+}
+
+.loginlogoutButton::before,
+.loginlogoutButton::after {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  content: '';
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-color: #165899;
+}
+
+.loginlogoutButton,
+.loginlogoutButton::before,
+.loginlogoutButton::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.loginlogoutButton::before {
+  top: 0;
+}
+
+.loginlogoutButton::after {
+  bottom: 0;
+}
+
+.loginlogoutButton:hover::before,
+.loginlogoutButton:hover::after {
+  height: 0;
+  background-color: #59b1eb;
+}
+
+/* github、googleログインボタンのデザイン */
+.loginArea {
+  margin-top: 150px;
+}
+
+/* アンケート作成ボタンデザイン */
+.makequestionnaireButton {
+  background-color: #165899;
+  color: white;
+  font-size: 17px;
+  padding: 15px;
+  border: 0px;
+  transition: 300ms;
+  float: right;
+  margin-top: 120px;
+  /* ↓下線を削除 */
+  text-decoration: none; 
+}
+
+.makequestionnaireButton:hover {
+  transform: scale(1.2,1.2);
+  background-color: #2d8edd;
+  box-shadow: 0 0 15px 0 #165899;
+}
+
+/* アンケート作成の見出しデザイン */
+.makeQuestionnaire-box {
+  margin-top: 70px;
+}
+
+/* アンケート作成の見出しの下線デザイン */
+.item {
+  color: #165899;
+  border-bottom: solid 3px #165899;
+}
+
+/* 作成・投稿・完了ボタンのデザイン */
+.postButton {
+  background: #165899;
+  color: #fff;
+  border: none;
+  position: relative;
+  height: 50px;
+  font-size: 1.6em;
+  padding: 0 2em;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+  margin-top: 20px;
+}
+.postButton:hover {
+  background: #fff;
+  color: #165899;
+}
+.postButton:before,
+.postButton:after {
+  content :'';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: #165899;
+  transition: 400ms ease all;
+}
+.postButton:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+.postButton:hover:before,
+.postButton:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
+}
+
+/* メニュー関係 */
+#menu {
+  margin: 70px 0 70px 0;
+}
+
+nav ul {
+  display: table;
+  margin: 0 auto;
+  padding: 0 ;
+  width: 100%;
+  text-align: center;
+}
+nav li {
+  display: table-cell;
+  min-width: 50px;
+}
+
+nav input {
+  display: block;
+  outline: none;
+  border: none;
+  background: white;
+  height: 60px;
+  width: 100%;
+  text-decoration: none;
+  font-size: 15px;
+  color: #003366;
+  padding-bottom: 5px;
+}
+nav li:hover {
+  border-bottom: 3px solid #003366;
+}
+
+/* 見出しデザイン */
+#title {
+  margin-top: 120px;
+}
+
+.title {
+  font-size: 35px;
+  font-weight: bold;
+  color: #165899;
+  text-shadow: 3px 3px 0 #6c9de6;
+}
+
+/* 表関係のデザイン */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 0 15px -6px #00000073;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+table tr {
+  background-color: #fff;
+}
+
+table th,
+table td {
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+table  th {
+  padding: 10px 0;
+  font-size: 14px;
+  padding: 15px;
+  background-color: #165899;
+  color:#fff;
+}
+
+table tr{
+  text-align: center;
+  width: 20%;
+  padding: 20px 0;
+  background-color: #fff;
+  color:#3a3a3a;
+}
+
+table tr:hover {
+  background-color: #aad9f8;
+}
+
+#rankingTable {
+  counter-reset: rowCount;
+}
+
+#rankingTable > tbody > tr {
+  counter-increment: rowCount;
+}
+
+#rankingTable > tbody > tr > td:first-child::before {
+  content: counter(rowCount);
+}
+
+/* Easyアンケートへようこそとアカウント情報のデザイン */
+.welcomeArea,
+.accountArea {
+  line-height: 50px;
+}
+
+/* アンケート作成・アンケート編集・アンケートに答える・コメントを投稿するときのフォームデザイン */
+input[type="text"] {
+  width: 50%;
+}
+
+textarea {
+  width: 90%;
+}
+
+select {
+  width: 200px;
+  padding: 3px;
+}
+
+input,
+textarea {
+  padding: 8px;
+}
+
+input[type="text"],
+textarea,
+select {
+  border: 2px solid #003366;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  box-sizing: border-box;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  border-color: #165899;
+  box-shadow: 0 0 15px 0 #165899;
+}
+
+/* 削除ボタンのデザイン */
+.deleteButton {
+  background-color: #ca3939;
+  color: white;
+  font-size: 17px;
+  padding: 15px;
+  margin: 10px;
+  border: 0px;
+  transition: 300ms;
+  float: right;
+  outline: none;
+}
+
+.deleteButton:hover {
+  transform: scale(1.2,1.2);
+  background-color: #e96812;
+  box-shadow: 0 0 15px 0 #ca3939;
+}
+
+/* アンケートのタイトルデザイン */
+.questionnaireTitle {
+  position: relative;
+  padding: 0.5em;
+  background: #165899;
+  color: white;
+  margin-top: 150px;
+  margin-bottom: 70px;
+  width: 100%;
+}
+
+.questionnaireTitle::before {
+  position: absolute;
+  content: '';
+  top: 100%;
+  left: 0;
+  border: none;
+  border-bottom: solid 15px transparent;
+  border-right: solid 20px rgb(149, 158, 155);
+}
+
+/* アンケート概要のエリアデザイン */
+#overview {
+  width: 100%;
+  padding: 10px 20px;
+  width: 100%;
+  background-color: #e1effc;
+}
+
+/* SELECTアンケート項目のタイトルデザイン */
+.questionnaireItemName {
+  border: 3px solid #165899;
+  color: #165899;
+  padding: 10px;
+}
+
+/* TEXTアンケート項目のタイトルデザイン */
+.questionnaireItem-title {
+  padding: 0.4em 0.5em;
+  color: #494949;
+  background: #f4f4f4;
+  border-left: solid 5px #165899;
+  border-bottom: solid 3px #d7d7d7;
+}
+
+/* コメントのデザイン */
+.comment-area,
+.mycomment-area {
+  position: relative;
+  display: inline-block;
+  margin: 1.5em 0 1.5em 15px;
+  padding: 7px 10px;
+  min-width: 120px;
+  max-width: 100%;
+  color: #555;
+  font-size: 16px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.comment-area {
+  background: #e0edff;
+}
+
+.mycomment-area {
+  background: #9dc5fd;
+}
+
+.comment-area:before,
+.mycomment-area:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  margin-top: -15px;
+  border: 15px solid transparent;
+}
+
+.comment-area:before {
+  left: -30px;
+  border-right: 15px solid #e0edff;
+}
+
+.mycomment-area:before {
+  left: 100%;
+  border-left: 15px solid #9dc5fd;
+}
+
+.comment-area p,
+.mycomment-area p {
+  margin: 5px;
+  padding: 10px 20px;
+}
+
+.commentOverview {
+  color: #555;
+}
+
+/* 危険な編集のデザイン */
+.danger {
+  color: #ca3939;
+  margin-top: 50px;
+}
+
+/* アンケート変更・削除・github・googleログインボタンのデザイン */
+.questionnairedeleteButton,
+.questionnaireeditButton,
+.githubButton,
+.googleButton {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  -webkit-box-shadow: 0px 6px 3px -3px rgba(0,0,0,0.4);
+  box-shadow: 0px 6px 3px -3px rgba(0,0,0,0.4);
+  -webkit-transition: .12s;
+  transition: .12s;
+  margin: 20px;
+}
+
+.questionnairedeleteButton {
+  background: #ca3939;
+  border: #bd1111;
+}
+
+.questionnaireeditButton,
+.githubButton,
+.googleButton {
+  background: #165899;
+  border: #073563;
+}
+
+.questionnairedeleteButton:hover {
+  background: #ffffff;
+  border: solid 2px #bd1111;
+  color: #ca3939;
+  opacity: 0.8;
+}
+
+.questionnaireeditButton:hover,
+.githubButton:hover,
+.googleButton:hover {
+  background: #ffffff;
+  border: solid 2px #073563;
+  color: #165899;
+  opacity: 0.8;
 }

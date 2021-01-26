@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  div(class="mainArea")
+    h1(id="title" class="title") アンケート作成
+    p ＊全ての項目を入力してください
+    p ＊他人を傷つけたり不快な気持ちにさせるような内容にしないでください。もしそのような内容だった場合はアプリ管理人によって削除される場合があります。
+    form(method="post", action="/questionnaires")
+      input(type="hidden" name="_csrf" value!=csrfToken)
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケート名
+        p ＊後で編集可
+        p 例： りんごとバナナどちらが好き？
+        input(type="text" name="questionnaireName" required)
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートの内容の説明や何か一言
+        p ＊後で編集可
+        p 例：<br>　りんごとバナナどちらも美味しいですが、皆さんはどちらが好みですか？<br>　理由も含めて教えてください！
+        textarea(name="memo" rows="5" required)
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートの項目
+        p 注意：<br>　1.一つの項目を入力をしたら改行して他の項目を入力してください。（改行しないと項目が１つだけになってしまいます。）<br>　2.選択式の場合は必ず２つ以上の項目を作ってください。<br>　3.項目は後から編集で増やすことは可能ですが減らすことはできません。
+        p 例：<br>　りんご<br>　バナナ
+        textarea(name="questionnaireItem" rows="5" required)
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートに答えるのにかかる時間の目安
+        p ＊後で編集可
+        select(name="howLong")
+          option(value="１分以内") １分以内
+          option(value="５分以内") ５分以内
+          option(value="１０分以内") １０分以内
+          option(value="２０分以内") ２０分以内
+          option(value="３０分以上") ３０分以上
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートの形式
+        p 注意： アンケート形式は後で変更することができません
+        p 選択式アンケート： 回答者があなたの作成したアンケートの選択肢を選択することで答えていく形式です。<br>比較的短めのアンケートや、簡潔なアンケートを作るときに便利です。
+        p 文章式アンケート： 回答者が文章で答えていく形式です。<br>回答者の意見を詳しく聞きたい時などに便利です。
+        select(name="selectiveOrtext")
+          option(value="0") 選択式
+          option(value="1") 文章式
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートをOPENにするかCLOSEにするか
+        p ＊後で編集可
+        p OPENアンケート： アンケートの結果が皆にも見れるような形で、皆の意見や選んだ理由などを聞けるチャットルームが開かれます。<br>公開しても問題ないアンケートであれば基本的にこちらを推奨します。
+        p CLOSEアンケート： アンケートの結果が自分しか見れない形で、チャットルームは開かれません。<br>アンケートの結果を公開したくない場合に便利です。
+        select(name="openOrclose")
+          option(value="0") OPEN
+          option(value="1") CLOSE
+      
+      button(type="submit" class="postButton") 作成

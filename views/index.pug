@@ -1,5 +1,169 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+  div(class="mainArea")
+    if user  
+      a(href="/logout" class="loginlogoutButton") #{user.username} をログアウト
+      a(href="/questionnaires/makeQuestionnaire" class="makequestionnaireButton") アンケートを作成
+      div(id="menu")
+        nav
+          ul
+            li
+              input(type="button" value="全アンケート" onclick="switching('a')")
+            li
+              input(type="button" value="回答可能アンケート" onclick="switching('b')")
+            li
+              input(type="button" value="あなたのアンケート" onclick="switching('c')")
+            li
+              input(type="button" value="ユーザー回答数ランキング" onclick="switching('d')")
+            li
+              input(type="button" value="Easyアンケートについて" onclick="switching('e')")
+            li
+              input(type="button" value="アカウント情報" onclick="switching('f')")
+      
+      div(id="a")
+        h2(class="title") 全アンケート一覧
+        table(id="questionnairetable").table
+          tr
+            th アンケート名
+            th 回答にかかる時間目安
+            th アンケート形式
+            th 回答数
+            th 作成者
+            th 更新日時
+          each questionnaire in questionnaires
+            - const myQuestionnaire = user.userId === questionnaire.createdBy
+            - const selective = questionnaire.selectiveOrtext === 0
+            - const text = questionnaire.selectiveOrtext === 1
+            - const open = questionnaire.openOrclose === 0
+            - const close = questionnaire.openOrclose === 1
+            tr
+              td
+                a(href=`/questionnaires/${questionnaire.questionnaireId}`) #{questionnaire.questionnaireName}
+              td #{questionnaire.howLong}
+              if selective && open
+                td 選択・OPEN 形式
+              else if selective && close
+                td 選択・CLOSE 形式
+              else if text && open
+                td 文章・OPEN 形式
+              else
+                td 文章・CLOSE 形式
+              td #{questionnaire.numberOfanswers}件
+              if myQuestionnaire
+                td 自分
+              else
+                td #{questionnaire.user.username}さん
+              td ⏰ #{questionnaire.formattedUpdatedAt}
+
+      div(id="b")
+        h2(class="title") 回答可能アンケート一覧
+        table(id="questionnairetable").table
+          tr
+            th アンケート名
+            th 回答にかかる時間目安
+            th アンケート形式
+            th 回答数
+            th 作成者
+            th 更新日時
+          each questionnaire in questionnaires
+            - const sealQuestionnaire = questionnaire.seal === 0 
+            - const myQuestionnaire = user.userId === questionnaire.createdBy
+            - const selective = questionnaire.selectiveOrtext === 0
+            - const text = questionnaire.selectiveOrtext === 1
+            - const open = questionnaire.openOrclose === 0
+            - const close = questionnaire.openOrclose === 1
+            if sealQuestionnaire
+              tr
+                td
+                  a(href=`/questionnaires/${questionnaire.questionnaireId}`) #{questionnaire.questionnaireName}
+                td #{questionnaire.howLong}
+                if selective && open
+                  td 選択・OPEN 形式
+                else if selective && close
+                  td 選択・CLOSE 形式
+                else if text && open
+                  td 文章・OPEN 形式
+                else
+                  td 文章・CLOSE 形式
+                td #{questionnaire.numberOfanswers}件
+                if myQuestionnaire
+                  td 自分
+                else
+                  td #{questionnaire.user.username}さん
+                td ⏰ #{questionnaire.formattedUpdatedAt}
+
+      div(id="c")
+        h2(class="title") あなたのアンケート一覧
+        table(id="questionnairetable").table
+          tr
+            th アンケート名
+            th 回答にかかる時間目安
+            th アンケート形式
+            th 回答数
+            th 更新日時
+          each questionnaire in questionnaires
+            - const myQuestionnaire = user.userId === questionnaire.createdBy
+            - const selective = questionnaire.selectiveOrtext === 0
+            - const text = questionnaire.selectiveOrtext === 1
+            - const open = questionnaire.openOrclose === 0
+            - const close = questionnaire.openOrclose === 1
+            if myQuestionnaire
+              tr
+                td
+                  a(href=`/questionnaires/${questionnaire.questionnaireId}`) #{questionnaire.questionnaireName}
+                td #{questionnaire.howLong}
+                if selective && open
+                  td 選択・OPEN 形式
+                else if selective && close
+                  td 選択・CLOSE 形式
+                else if text && open
+                  td 文章・OPEN 形式
+                else
+                  td 文章・CLOSE 形式
+                td #{questionnaire.numberOfanswers}件
+                td ⏰ #{questionnaire.formattedUpdatedAt}
+
+      div(id="d")
+        h2(class="title") ユーザー回答数ランキング
+        table(id="rankingTable").table
+          thead
+            tr
+              th 順位
+              th ユーザー名
+              th アンケートに回答した数
+            each answerRanking in answerRankings
+              tbody
+                if answerRanking.userId === user.userId
+                  tr(style="background:#99CCFF")
+                    td 位
+                    td #{answerRanking.username}さん
+                    td #{answerRanking.numberofmyAnswers}件
+                else
+                  tr
+                    td 位
+                    td #{answerRanking.username}さん
+                    td #{answerRanking.numberofmyAnswers}件
+
+      div(id="e" class="welcomeArea")
+        h2(class="title") Easyアンケートへようこそ！
+        p このアプリでは気軽に皆にアンケートを作成そして回答することができます。<br>日頃の問題や疑問を皆がどう思っているか知るのはもちろん、個人的なことに対して皆のアドバイスを聞いたりすることもできます。<br>またチャットルームを通して自分と意見が合う人同士楽しく会話したり、討論したりすることもできます。<br>日頃聞きにくい質問などはアンケート設定をCLOSEにすることでアンケート作成者にしかアンケート結果を見れないようにすることができます。<br>ユーザー回答数ランキング1位を目指してたくさんのアンケートに答えましょう！
+        h2(class="title") 注意事項
+        ul
+          li このアプリはあなたのアカウントの名前が他のユーザーに公表されますのでアカウント名が本名になっている方は十分お気をつけください。
+          li アンケート作成時や回答時、チャットルームなどで他人を傷つけたり不快な気持ちにさせるような投稿は控えてください。<br>もしそのようなアンケート内容や投稿を発見した場合はアプリ管理人が削除します。
+          li アンケート作成者以外にはあなたがどんな回答をしたかを見ることはできませんので、気軽に回答してください。
+
+      div(id="f" class="accountArea")
+        h2(class="title") アカウント情報
+        p アカウント： #{userAccount.provider}アカウント
+        p ユーザー名： #{user.username}
+        p アンケートに回答した数： #{user.numberofmyAnswers}件
+        p アンケートの保有数： #{user.numberofmyQuestionnaire}件
+
+    else
+      div
+        a(href="/login" class="loginlogoutButton") ログイン
+
+  script(defer, src="/javascripts/switching.js")

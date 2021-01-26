@@ -1,0 +1,175 @@
+extends layout
+
+block content
+  - const myQuestionnaire = user.id === questionnaire.createdBy
+  - const selective = questionnaire.selectiveOrtext === 0
+  - const text = questionnaire.selectiveOrtext === 1
+  - const open = questionnaire.openOrclose === 0
+  - const close = questionnaire.openOrclose === 1
+  - const seal = questionnaire.seal === 1
+  - const boss = user.id === '116417536229731755577';
+
+  div(class="mainArea")
+    h1(id="questionnaireName" class="questionnaireTitle") #{questionnaire.questionnaireName}
+  
+    div(id="overview")
+      p(style="color:#165899") 作成者からの説明：
+      p #{questionnaire.memo}
+      p <span style="color:#165899">回答にかかる時間目安：</span> #{questionnaire.howLong}
+      if selective && open
+        p <span style="color:#165899">形式：</span> 選択・OPEN
+      else if selective && close
+        p <span style="color:#165899">形式：</span> 選択・CLOSE
+      else if text && open
+        p <span style="color:#165899">形式：</span> 文章・OPEN
+      else
+        p <span style="color:#165899">形式：</span> 文章・CLOSE
+      p <span style="color:#165899">回答数：</span> #{questionnaire.numberOfanswers}件
+      if myQuestionnaire
+        p <span style="color:#165899">作成者：</span> 自分
+      else
+        p <span style="color:#165899">作成者：</span> #{questionnaire.user.username}さん
+      p <span style="color:#165899">更新日時：</span> #{questionnaire.formattedUpdatedAt}
+      if seal
+        p ＊このアンケートは作成者またはアプリ管理人によって閉じられたので回答またはコメントをすることはできません
+  
+    div(id="menu")
+      nav
+        ul
+          li
+            input(type="button" value="結果" onclick="switching('a')")
+          if !seal && !myQuestionnaire
+            li
+              input(type="button" value="答える" onclick="switching('b')")
+          if !myQuestionnaire
+            li
+              input(type="button" value="自分の回答" onclick="switching('c')")
+          if open
+            li
+              input(type="button" value="チャットルーム" onclick="switching('d')")
+          if myQuestionnaire || boss
+            li
+              input(type="button" value="編集" onclick="switching('e')")
+        ul
+      nav
+    
+    div(id="a")
+      h2(class="title") アンケート結果
+      if close && !myQuestionnaire
+        p このアンケートはCLOSEなのでアンケートの結果は見れません。
+      if selective && open || selective && myQuestionnaire
+        div(id="pieStage")
+        div(id="barStage")
+        script(defer, src="/javascripts/graph.js")
+        script(src="https://cdn.plot.ly/plotly-latest.min.js")
+        each questionnaireItem in questionnaireItems
+          h3(class="questionnaireItemName") #{questionnaireItem.questionnaireItemName}
+          if selective && open || selective && myQuestionnaire
+            p(class="questionnaireItemdata") ・・・#{questionnaireItem.numberOfvotes}件
+            if myQuestionnaire
+              each answer in answers
+                if answer.questionnaireItemId === questionnaireItem.questionnaireItemId
+                  p ▶︎#{answer.user.username}さん
+  
+      if text && open || text && myQuestionnaire
+        each questionnaireItem in questionnaireItems
+          h3(class="questionnaireItem-title") #{questionnaireItem.questionnaireItemName}
+          each answer in answers
+            if answer.questionnaireItemId === questionnaireItem.questionnaireItemId
+              if user.id === answer.user.userId
+                div(class="mycomment-area")
+                  p #{answer.answer}
+              else
+                div(class="comment-area")
+                  p #{answer.answer}
+                  if myQuestionnaire
+                    p ▶︎#{answer.user.username}さん
+              br
+  
+    div(id="b")
+      h2(class="title") アンケートに答える
+      p ＊回答した後にもう一度答えると更新されます
+      if selective && !seal
+        form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/selectiveAnswer`)
+          input(type="hidden" name="_csrf" value!=csrfToken)
+          each questionnaireItem in questionnaireItems
+            label
+              input(type="radio" name="selectiveQuestionnaire" value=`${questionnaireItem.questionnaireItemId}*${questionnaireItem.questionnaireItemName}` required)
+              | #{questionnaireItem.questionnaireItemName}
+              br
+          button(type="submit" class="postButton") 完了
+      if text && !seal
+        form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/textAnswer`)
+          input(type="hidden" name="_csrf" value!=csrfToken)
+          each questionnaireItem in questionnaireItems
+            input(type="hidden" name="questionnaireItemId" value=`${questionnaireItem.questionnaireItemId}`)
+            p #{questionnaireItem.questionnaireItemName}
+            textarea(name="textQuestionnaire" rows="3" required)
+          button(type="submit" class="postButton") 完了
+  
+    div(id="c")
+      h2(class="title") 自分の回答
+      if selective
+        each answer in answers
+          if user.id === answer.user.userId
+            p 　　#{answer.answer}
+      else if text
+        each questionnaireItem in questionnaireItems
+          h3(class="questionnaireItem-title") #{questionnaireItem.questionnaireItemName}
+          each answer in answers
+            if user.id === answer.user.userId && questionnaireItem.questionnaireItemId === answer.questionnaireItemId
+              p #{answer.answer}
+  
+    div(id="d")
+      h2(class="title") チャットルーム
+      if open
+        if !seal
+          h3 コメントを投稿（投稿主の名前が表示されます）
+          p ＊他人を傷つけたり不快な気持ちにさせるような投稿は控えてください。もしそのような投稿をした場合はアプリの管理人によって削除されます。
+          form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/comment`)
+            input(type="hidden" name="_csrf" value!=csrfToken)
+            textarea(name="comment" rows="3" placeholder="字数制限255文字まで" required)
+            button(type="submit" class="postButton") 投稿
+        h3 コメント一覧
+        each comment in comments        
+          if user.id === comment.user.userId
+            div(class="mycomment-area")
+              p(class="commentOverview") 😳 投稿者： 自分
+              p #{comment.comment}
+              form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/commentDelete`)
+                input(type="hidden" name="_csrf" value!=csrfToken)
+                input(type="hidden" name="commentId" value=comment.commentId)
+                button(type="submit" class="deleteButton") 削除
+              p(class="commentOverview") ⏰ 投稿日時： #{comment.formattedPostedAt}
+              br
+          else
+            div(class="comment-area")
+              if questionnaire.user.userId === comment.user.userId
+                p(style="color:blue" class="commentOverview") 😎 投稿者： アンケート管理者の#{comment.user.username}さん
+              else if '116417536229731755577' === comment.user.userId
+                p(style="color:red") 👑 投稿者： Easyアンケート管理人
+              else
+                p 😶 投稿者： #{comment.user.username}さん
+              p #{comment.comment}
+              p(class="commentOverview") ⏰ 投稿日時： #{comment.formattedPostedAt}
+              if boss
+                form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/commentDelete`)
+                  input(type="hidden" name="_csrf" value!=csrfToken)
+                  input(type="hidden" name="commentId" value=comment.commentId)
+                  button(type="submit" class="deleteButton") 削除
+              br
+  
+    div(id="e")
+      if myQuestionnaire || boss
+        h2(class="title") 編集
+        if !seal
+          a(href=`/questionnaires/${questionnaire.questionnaireId}/edit` class="questionnaireeditButton") このアンケートの内容を変更する
+          h2(class="danger") 危険な編集
+          a(href=`/questionnaires/${questionnaire.questionnaireId}/seal` class="questionnairedeleteButton") このアンケートの回答フォームを閉じる
+          p ＊回答フォームを一度閉じると元に戻すことはできません。<br>また回答フォームを閉じてもアンケート結果は公開された状態です。<br>アンケートの結果自体も消したい場合は削除ボタンを押してください。
+        form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/delete`)
+          input(type="hidden" name="_csrf" value!=csrfToken)
+          button(type="submit" class="questionnairedeleteButton") このアンケートを削除する🗑
+        p ＊アンケートを削除したら復元することはできません。
+  
+    script(defer, src="/javascripts/switching.js")

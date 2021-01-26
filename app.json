@@ -1,0 +1,7 @@
+{
+  "name": "questionnaireApp",
+  "description": "Easyアンケート",
+  "logo": "",
+  "keywords": ["node"],
+  "image": "heroku/nodejs"
+}

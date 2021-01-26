@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  - const open = questionnaire.openOrclose === 0
+  
+  div(class="mainArea")
+    h1(id="title" class="title") アンケートの内容を変更
+    form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/edit`)
+      input(type="hidden" name="_csrf" value!=csrfToken)
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケート名を変更
+        p 変更前： #{questionnaire.questionnaireName}
+        input(type="text" name="questionnaireName" value=questionnaire.questionnaireName)
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートの内容の説明や何か一言の内容を変更
+        p 変更前：<br>#{questionnaire.memo}
+        textarea(name="memo" rows="5") #{questionnaire.memo}
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートの項目を追加
+        label 変更前
+          ul
+            each questionnaireItem in questionnaireItems
+              li #{questionnaireItem.questionnaireItemName}
+        p 追加する項目をお書きください（改行で複数入力・項目を削除することはできません）<br>＊一つの項目を入力をしたら改行して他の項目を入力してください。（改行しないと項目が１つだけになってしまいます。）
+        textarea(name="questionnaireItem" rows="5")
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートに答えるのにかかる時間の目安を変更
+        p 変更前： #{questionnaire.howLong}
+        select(name="howLong")
+          option(value="１分以内") １分以内
+          option(value="５分以内") ５分以内
+          option(value="１０分以内") １０分以内
+          option(value="２０分以内") ２０分以内
+          option(value="３０分以上") ３０分以上
+  
+      div(class="makeQuestionnaire-box")
+        h2(class="item") アンケートをOPENにするかCLOSEにするか
+        if open
+          p 変更前： OPENアンケート
+        else
+          p 変更前： CLOSEアンケート
+        p OPENアンケート： アンケートの結果が皆にも見れるような形で、皆の意見や選んだ理由などを聞けるチャットルームが開かれます。<br>公開しても問題ないアンケートであれば基本的にこちらを推奨します。
+        p CLOSEアンケート： アンケートの結果が自分にしか見れない形で、チャットルームは開かれません。<br>アンケートの結果を公開したくない場合に便利です。<br>（アンケートの作成者が自分の場合CLOSEでもアンケートの結果を閲覧できます）
+        select(name="openOrclose")
+          option(value="0") OPEN
+          option(value="1") CLOSE
+      
+      button(type="submit" class="postButton") 変更
