@@ -124,18 +124,19 @@ app.get('/auth/github',
 });
 
 app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/' }),
+  passport.authenticate('github', { failureRedirect: '/login' }),
   function (req, res) {
-    var loginFrom = req.cookies.loginFrom;
-    // オープンリダイレクタ脆弱性対策
-    if (loginFrom &&
-      !loginFrom.includes('http://') &&
-      !loginFrom.includes('https://')) {
-      res.clearCookie('loginFrom');
-      res.redirect(loginFrom);
-    } else {
-      res.redirect('/');
-    }
+    res.redirect('/');
+    // var loginFrom = req.cookies.loginFrom;
+    // // オープンリダイレクタ脆弱性対策
+    // if (loginFrom &&
+    //   !loginFrom.includes('http://') &&
+    //   !loginFrom.includes('https://')) {
+    //   res.clearCookie('loginFrom');
+    //   res.redirect(loginFrom);
+    // } else {
+    //   res.redirect('/');
+    // }
 });
 
 // Googleログイン認証（スコープ設定）へ
@@ -148,18 +149,19 @@ app.get('/auth/google', passport.authenticate('google', {
 
 // Googleログインコールバック
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
-    var loginFrom = req.cookies.loginFrom;
-    // オープンリダイレクタ脆弱性対策
-    if (loginFrom &&
-      !loginFrom.includes('http://') &&
-      !loginFrom.includes('https://')) {
-      res.clearCookie('loginFrom');
-      res.redirect(loginFrom);
-    } else {
-      res.redirect('/');
-    }
+    res.redirect('/');
+    // var loginFrom = req.cookies.loginFrom;
+    // // オープンリダイレクタ脆弱性対策
+    // if (loginFrom &&
+    //   !loginFrom.includes('http://') &&
+    //   !loginFrom.includes('https://')) {
+    //   res.clearCookie('loginFrom');
+    //   res.redirect(loginFrom);
+    // } else {
+    //   res.redirect('/');
+    // }
 });
 
 // catch 404 and forward to error handler
