@@ -5,7 +5,7 @@ function ensure(req, res, next) {
     return next();
   }
   // res.redirect('/login?from=' + req.originalUrl);
-  res.redirect('/');
+  res.redirect('/login');
 }
 
 module.exports = ensure;
