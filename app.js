@@ -124,7 +124,7 @@ app.get('/auth/github',
 });
 
 app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),
+  passport.authenticate('github', { failureRedirect: '/' }),
   function (req, res) {
     res.redirect('/');
     // var loginFrom = req.cookies.loginFrom;
@@ -149,7 +149,7 @@ app.get('/auth/google', passport.authenticate('google', {
 
 // Googleログインコールバック
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   function (req, res) {
     res.redirect('/');
     // var loginFrom = req.cookies.loginFrom;
