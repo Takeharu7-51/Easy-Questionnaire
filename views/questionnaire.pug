@@ -30,8 +30,12 @@ block content
       else
         p <span style="color:#165899">作成者：</span> #{questionnaire.user.username}さん
       p <span style="color:#165899">更新日時：</span> #{questionnaire.formattedUpdatedAt}
+      label(style="color:#165899") 共有用 URL:
+        - var herokuURL = process.env.HEROKU_URL ? process.env.HEROKU_URL : 'http://localhost:8000/'
+        input(type="text" id="copyTarget" value=`${herokuURL}questionnaires/${questionnaire.questionnaireId}/` readonly)
+        button(class="copyButton" onclick="copyToClipboard()") コピー📠
       if seal
-        p ＊このアンケートは作成者またはアプリ管理人によって閉じられたので回答またはコメントをすることはできません
+        p(class="warning") ＊このアンケートは作成者またはアプリ管理人によって閉じられたので回答またはコメントをすることはできません
   
     div(id="menu")
       nav
@@ -56,7 +60,7 @@ block content
     div(id="a")
       h2(class="title") アンケート結果
       if close && !myQuestionnaire
-        p このアンケートはCLOSEなのでアンケートの結果は見れません。
+        p(class="warning") このアンケートはCLOSEなのでアンケートの結果は見れません。
       if selective && open || selective && myQuestionnaire
         div(id="pieStage")
         div(id="barStage")
@@ -88,7 +92,7 @@ block content
   
     div(id="b")
       h2(class="title") アンケートに答える
-      p ＊回答した後にもう一度答えると更新されます
+      p(class="warning") ＊回答した後にもう一度答えると更新されます
       if selective && !seal
         form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/selectiveAnswer`)
           input(type="hidden" name="_csrf" value!=csrfToken)
@@ -125,7 +129,7 @@ block content
       if open
         if !seal
           h3 コメントを投稿（投稿主の名前が表示されます）
-          p ＊他人を傷つけたり不快な気持ちにさせるような投稿は控えてください。もしそのような投稿をした場合はアプリの管理人によって削除されます。
+          p(class="warning") ＊他人を傷つけたり不快な気持ちにさせるような投稿は控えてください。もしそのような投稿をした場合はアプリの管理人によって削除されます。
           form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/comment`)
             input(type="hidden" name="_csrf" value!=csrfToken)
             textarea(name="comment" rows="3" placeholder="字数制限255文字まで" required)
@@ -166,10 +170,10 @@ block content
           a(href=`/questionnaires/${questionnaire.questionnaireId}/edit` class="questionnaireeditButton") このアンケートの内容を変更する
           h2(class="danger") 危険な編集
           a(href=`/questionnaires/${questionnaire.questionnaireId}/seal` class="questionnairedeleteButton") このアンケートの回答フォームを閉じる
-          p ＊回答フォームを一度閉じると元に戻すことはできません。<br>また回答フォームを閉じてもアンケート結果は公開された状態です。<br>アンケートの結果自体も消したい場合は削除ボタンを押してください。
+          p(class="warning") ＊回答フォームを一度閉じると元に戻すことはできません。<br>　また回答フォームを閉じてもアンケート結果は公開された状態です。<br>　アンケートの結果自体も消したい場合は削除ボタンを押してください。
         form(method="post", action=`/questionnaires/${questionnaire.questionnaireId}/delete`)
           input(type="hidden" name="_csrf" value!=csrfToken)
           button(type="submit" class="questionnairedeleteButton") このアンケートを削除する🗑
-        p ＊アンケートを削除したら復元することはできません。
+        p(class="warning") ＊アンケートを削除したら復元することはできません。
   
     script(defer, src="/javascripts/switching.js")
