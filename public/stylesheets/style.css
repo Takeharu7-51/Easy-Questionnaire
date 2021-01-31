@@ -25,6 +25,18 @@ a {
   z-index: 100;
 }
 
+/* トップロゴのデザイン */
+.gototopArea {
+  height: 85px;
+  padding: 0.5em;
+}
+
+.gotoTop {
+  font-size: 55px;
+  font-family: 'Hiragino Maru Gothic Pro';
+  text-decoration: none;
+}
+
 .mainArea {
   padding: 60px;
 }
@@ -109,7 +121,9 @@ a {
   text-decoration: none; 
 }
 
-.makequestionnaireButton:hover {
+/* コピーボタンもhover時は同じ処理なのでここで設定 */
+.makequestionnaireButton:hover,
+.copyButton:hover {
   transform: scale(1.2,1.2);
   background-color: #2d8edd;
   box-shadow: 0 0 15px 0 #165899;
@@ -124,6 +138,10 @@ a {
 .item {
   color: #165899;
   border-bottom: solid 3px #165899;
+}
+
+.warning {
+  color: rgb(226, 4, 4);
 }
 
 /* 作成・投稿・完了ボタンのデザイン */
@@ -192,12 +210,12 @@ nav input {
   height: 60px;
   width: 100%;
   text-decoration: none;
-  font-size: 15px;
-  color: #003366;
+  font-size: 17px;
+  color: #067ff8;
   padding-bottom: 5px;
 }
 nav li:hover {
-  border-bottom: 3px solid #003366;
+  border-bottom: 3px solid #067ff8;
 }
 
 /* 見出しデザイン */
@@ -354,6 +372,24 @@ select:focus {
   padding: 10px 20px;
   width: 100%;
   background-color: #e1effc;
+}
+
+/* 共有リンクのデザイン */
+#copyTarget {
+  border: none;
+  background-color: rgba(255,255,255,0.5);
+  padding: 13px;
+  margin-left: 10px;
+  margin-right: 7px;
+}
+
+.copyButton {
+  color: white;
+  background-color: #165899;
+  border-radius: 5px;
+  border: none;
+  padding: 13px;
+  transition: 300ms;
 }
 
 /* SELECTアンケート項目のタイトルデザイン */
