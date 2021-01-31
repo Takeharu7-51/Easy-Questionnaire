@@ -3,8 +3,8 @@ extends layout
 block content
   div(class="mainArea")
     h1(id="title" class="title") アンケート作成
-    p ＊全ての項目を入力してください
-    p ＊他人を傷つけたり不快な気持ちにさせるような内容にしないでください。もしそのような内容だった場合はアプリ管理人によって削除される場合があります。
+    p(class="warning") ＊全ての項目を入力してください
+    p(class="warning") ＊他人を傷つけたり不快な気持ちにさせるような内容にしないでください。もしそのような内容だった場合はアプリ管理人によって削除される場合があります。
     form(method="post", action="/questionnaires")
       input(type="hidden" name="_csrf" value!=csrfToken)
       div(class="makeQuestionnaire-box")
@@ -21,7 +21,7 @@ block content
   
       div(class="makeQuestionnaire-box")
         h2(class="item") アンケートの項目
-        p 注意：<br>　1.一つの項目を入力をしたら改行して他の項目を入力してください。（改行しないと項目が１つだけになってしまいます。）<br>　2.選択式の場合は必ず２つ以上の項目を作ってください。<br>　3.項目は後から編集で増やすことは可能ですが減らすことはできません。
+        p(class="warning") 注意：<br>　1.一つの項目を入力をしたら改行して他の項目を入力してください。（改行しないと項目が１つだけになってしまいます。）<br>　2.選択式の場合は必ず２つ以上の項目を作ってください。<br>　3.項目は後から編集で増やすことは可能ですが減らすことはできません。
         p 例：<br>　りんご<br>　バナナ
         textarea(name="questionnaireItem" rows="5" required)
   
@@ -37,7 +37,7 @@ block content
   
       div(class="makeQuestionnaire-box")
         h2(class="item") アンケートの形式
-        p 注意： アンケート形式は後で変更することができません
+        p(class="warning") 注意： アンケート形式は後で変更することができません
         p 選択式アンケート： 回答者があなたの作成したアンケートの選択肢を選択することで答えていく形式です。<br>比較的短めのアンケートや、簡潔なアンケートを作るときに便利です。
         p 文章式アンケート： 回答者が文章で答えていく形式です。<br>回答者の意見を詳しく聞きたい時などに便利です。
         select(name="selectiveOrtext")
