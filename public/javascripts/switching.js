@@ -13,3 +13,10 @@ function switching(data) {
     document.getElementById(menu).style.display = "none";
   });
 }
+
+//クリップボードにコピー
+function copyToClipboard() {
+  var copyTarget = document.getElementById("copyTarget");
+  copyTarget.select();
+  document.execCommand("Copy");
+}
