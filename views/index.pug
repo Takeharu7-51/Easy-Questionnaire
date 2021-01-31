@@ -127,6 +127,7 @@ block content
 
       div(id="d")
         h2(class="title") ユーザー回答数ランキング
+        p(class="warning") ＊回答後アンケート作者がアンケートを削除する場合がありますので、アンケートの総数よりも自分の回答の方が多くなる場合があります。
         table(id="rankingTable").table
           thead
             tr
@@ -162,8 +163,8 @@ block content
         p アンケートに回答した数： #{user.numberofmyAnswers}件
         p アンケートの保有数： #{user.numberofmyQuestionnaire}件
 
+      script(defer, src="/javascripts/switching.js")
+
     else
       div
         a(href="/login" class="loginlogoutButton") ログイン
-
-  script(defer, src="/javascripts/switching.js")
