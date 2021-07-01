@@ -4,7 +4,7 @@
 [https://ancient-reaches-07414.herokuapp.com/](https://ancient-reaches-07414.herokuapp.com/)
 **（ログインにはgoogleアカウントかGithubアカウントが必要になります）**
 
-##講師の方々からいただいたフィードバックはこちら↓
+## 講師の方々からいただいたフィードバックはこちら↓
 [https://github.com/Takeharu7-51/Easy-Questionnaire/blob/main/teachers%20feedback.md](https://github.com/Takeharu7-51/Easy-Questionnaire/blob/main/teachers%20feedback.md)
 
 ## 説明
