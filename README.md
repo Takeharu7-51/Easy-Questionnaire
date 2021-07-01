@@ -4,6 +4,9 @@
 [https://ancient-reaches-07414.herokuapp.com/](https://ancient-reaches-07414.herokuapp.com/)
 **（ログインにはgoogleアカウントかGithubアカウントが必要になります）**
 
+##講師の方々からいただいたフィードバックはこちら↓
+[https://github.com/Takeharu7-51/Easy-Questionnaire/blob/main/teachers%20feedback.md](https://github.com/Takeharu7-51/Easy-Questionnaire/blob/main/teachers%20feedback.md)
+
 ## 説明
 * このアプリでは気軽に皆にアンケートを作成そして回答することができます。
 * 日頃の問題や疑問を皆がどう思っているか知るのはもちろん、個人的なことに対して皆のアドバイスを聞いたりすることもできます。
