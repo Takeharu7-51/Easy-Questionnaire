@@ -1,7 +1,7 @@
 # Easyアンケート(Easy-Questionnaire)について
 
 ## 実際のリンクはこちら↓
-[https://ancient-reaches-07414.herokuapp.com/](https://ancient-reaches-07414.herokuapp.com/)
+[https://ancient-reaches-07414.herokuapp.com/](https://nameless-caverns-65179-e9728fc29c88.herokuapp.com/)
 **（ログインにはgoogleアカウントかGithubアカウントが必要になります）**
 
 ## 講師の方々からいただいたフィードバックはこちら↓
